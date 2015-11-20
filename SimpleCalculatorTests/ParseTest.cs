@@ -55,10 +55,34 @@ namespace SimpleCalculatorTests
         }
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ParseEnsureUserEnteredValidInput()
+        public void ParseEnsureUserEnteredNumberFirst()
         {
             Parse a_parse = new Parse();
-            string input = "21/+32";
+            string input = "+31";
+            a_parse.CheckForValidInput(input);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ParseEnsureUserEnteredAnOperator()
+        {
+            Parse a_parse = new Parse();
+            string input = "12431";
+            a_parse.CheckForValidInput(input);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ParseEnsureUserUsesOneOperator()
+        {
+            Parse a_parse = new Parse();
+            string input = "1+/31";
+            a_parse.CheckForValidInput(input);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ParseEnsureUserEndsInputInNumber()
+        {
+            Parse a_parse = new Parse();
+            string input = "23+";
             a_parse.CheckForValidInput(input);
         }
     }

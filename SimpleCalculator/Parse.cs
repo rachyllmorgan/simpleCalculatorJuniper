@@ -64,9 +64,10 @@ namespace SimpleCalculator
 
         public bool CheckForValidInput(string input)
         {
-            string pattern = @"[0-9]+[(-+*/)][0-9]+";
+            string pattern = @"[0-9]+[(-+*/)][0-9]+$";
             Regex regex = new Regex(pattern);
             Match expression = regex.Match(input);
+
             while (expression.Success)
             {
                 return false;
