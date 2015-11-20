@@ -26,7 +26,6 @@ namespace SimpleCalculator
         {
         }
 
-
         public char [] ConvertToCharArray()
         {
             return value.ToCharArray();
@@ -65,7 +64,14 @@ namespace SimpleCalculator
 
         public bool CheckForValidInput(string input)
         {
-            return false;
+            string pattern = @"[0-9]+[(-+*/)][0-9]+";
+            Regex regex = new Regex(pattern);
+            Match expression = regex.Match(input);
+            while (expression.Success)
+            {
+                return false;
+            }
+            throw new InvalidOperationException();
         }
     }
 }
