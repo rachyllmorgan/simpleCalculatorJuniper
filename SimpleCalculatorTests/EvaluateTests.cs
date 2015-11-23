@@ -14,24 +14,53 @@ namespace SimpleCalculatorTests
             Assert.IsNotNull(eval);
         }
         [TestMethod]
-        public void EvaluateCanDetermineMathOperator()
+        public void EvaluateEnsureICanGetIntegers()
         {
             Evaluate eval = new Evaluate();
-            string input = "21-3";
-
-            char result = eval.DetermineEvaluator(input);
-
-            Assert.AreEqual('-', result);
+            string input = "21 / 3";
+            int[] expected = new int[] { 21, 3 };
+            int [] actual = eval.GetTerms(input);
+            CollectionAssert.AreEqual(expected, actual);
         }
         [TestMethod]
-        public void EvaluateCanHandleAddition()
+        public void EvaluateEnsureICanDoAddition()
         {
             Evaluate eval = new Evaluate();
-            string input = "32 + 12";
-
-            int result = eval.Addition(input);
-
-            Assert.AreEqual(44, result);
+            string input = "21 + 3";
+            int actual = eval.CalculateMath(input);
+            Assert.AreEqual(24, actual);
+        }
+        [TestMethod]
+        public void EvaluateEnsureICanDoSubtraction()
+        {
+            Evaluate eval = new Evaluate();
+            string input = "21 - 3";
+            int actual = eval.CalculateMath(input);
+            Assert.AreEqual(18, actual);
+        }
+        [TestMethod]
+        public void EvaluateEnsureICanDoDivision()
+        {
+            Evaluate eval = new Evaluate();
+            string input = "21 / 3";
+            int actual = eval.CalculateMath(input);
+            Assert.AreEqual(7, actual);
+        }
+        [TestMethod]
+        public void EvaluateEnsureICanDoMultiplication()
+        {
+            Evaluate eval = new Evaluate();
+            string input = "2 * 3";
+            int actual = eval.CalculateMath(input);
+            Assert.AreEqual(6, actual);
+        }
+        [TestMethod]
+        public void EvaluateEnsureICanGetARemainder()
+        {
+            Evaluate eval = new Evaluate();
+            string input = "20 % 3";
+            int actual = eval.CalculateMath(input);
+            Assert.AreEqual(2, actual);
         }
     }
 }

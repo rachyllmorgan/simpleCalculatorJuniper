@@ -50,8 +50,7 @@ namespace SimpleCalculator
         public int[] GetTerms(string input)
         {
             int[] terms = new int[2];
-            string pattern = @"[(-+*/)]";
-            //Regex regex = new Regex(pattern);
+            string pattern = @"[-(+*/%)]";
 
             string[] inputArray = Regex.Split(input, pattern);
 
@@ -64,7 +63,7 @@ namespace SimpleCalculator
 
         public bool CheckForValidInput(string input)
         {
-            string pattern = @"[0-9]+[(-+*/)][0-9]+$";
+            string pattern = @"[0-9]+[(-+*/%)][0-9]+$";
             Regex regex = new Regex(pattern);
             Match expression = regex.Match(input);
 
