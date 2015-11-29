@@ -19,7 +19,7 @@ namespace SimpleCalculatorTests
         {
             Parse a_parse = new Parse("21+32");
 
-            char[] expected = new char[] { '2', '1', '+', '3', '2' }; 
+            char[] expected = new char[] { '2', '1', '+', '3', '2' };
             char[] actual = a_parse.ConvertToCharArray();
 
             CollectionAssert.AreEqual(expected, actual);
@@ -37,19 +37,17 @@ namespace SimpleCalculatorTests
         [TestMethod]
         public void ParseEnsureICanGetOperatorOutOfArray()
         {
-            string input = "21+32";
-            Parse a_parse = new Parse(input);
-            char inputOperator = a_parse.GetOperators(input);
+            Parse a_parse = new Parse("21+32");
+            string inputOperator = a_parse.mathOperator;
 
-            Assert.AreEqual('+', inputOperator);
+            Assert.AreEqual("+", inputOperator);
         }
         [TestMethod]
         public void ParseEnsureICanGetDigitsOutOfArray()
         {
-            Parse a_parse = new Parse();
-            string input = "21 + 32";
+            Parse a_parse = new Parse("21 + 32");
             int[] expected_terms = new int[] { 21, 32 };
-            int[] actual_terms = a_parse.GetTerms(input);
+            int[] actual_terms = a_parse.terms;
 
             CollectionAssert.AreEqual(expected_terms, actual_terms);
         }
@@ -57,33 +55,25 @@ namespace SimpleCalculatorTests
         [ExpectedException(typeof(InvalidOperationException))]
         public void ParseEnsureUserEnteredNumberFirst()
         {
-            Parse a_parse = new Parse();
-            string input = "+31";
-            a_parse.CheckForValidInput(input);
+            Parse a_parse = new Parse("+31");
         }
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ParseEnsureUserEnteredAnOperator()
         {
-            Parse a_parse = new Parse();
-            string input = "12431";
-            a_parse.CheckForValidInput(input);
+            Parse a_parse = new Parse("12431");
         }
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ParseEnsureUserUsesOneOperator()
         {
-            Parse a_parse = new Parse();
-            string input = "1+/31";
-            a_parse.CheckForValidInput(input);
+            Parse a_parse = new Parse("1+/31");
         }
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ParseEnsureUserEndsInputInNumber()
         {
-            Parse a_parse = new Parse();
-            string input = "23+";
-            a_parse.CheckForValidInput(input);
+            Parse a_parse = new Parse("23+");
         }
     }
 }

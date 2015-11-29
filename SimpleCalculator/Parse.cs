@@ -9,47 +9,49 @@ namespace SimpleCalculator
 {
     public class Parse
     {
-        private char mathOperator;
-        private string value;
-        private string[] string_expression = new string[3];
-        private int [] int_expression = new int[3];
+        public string mathOperator { get; set; }
+        public string user_input { get; set; }
+        public int[] terms = new int[2];
+
+        public Parse() { }
 
         public Parse(string input)
         {
             string pattern = "\\s+";
             string replacement = "";
             Regex rgx = new Regex(pattern);
-            value = rgx.Replace(input, replacement);
-        }
+            user_input = rgx.Replace(input, replacement);
 
-        public Parse()
-        {
-        }
-
-        public char [] ConvertToCharArray()
-        {
-            return value.ToCharArray();
-        }
-
-        public char GetOperators(string input)
-        {
-            Parse a_parse = new Parse(input);
-            char [] inputArray = a_parse.ConvertToCharArray();
-            foreach(char letter in inputArray)
+            if (CheckForValidInput(user_input))
             {
-                if(letter == '+' || letter == '-' || letter == '*' || letter == '/' || letter == '%')
-                {
-                    mathOperator = letter;
-                    string_expression[1] = mathOperator.ToString();
-
-                }
+                GetOperators(user_input);
+                GetTerms(user_input);
             }
-            return mathOperator;
+            else
+            {
+                throw new InvalidOperationException();
+            }
         }
 
-        public int[] GetTerms(string input)
+        public char[] ConvertToCharArray()
         {
-            int[] terms = new int[2];
+            return user_input.ToCharArray();
+        }
+
+        public void GetOperators(string input)
+        {
+            string pattern = "[-+*/%]";
+            Regex regex = new Regex(pattern);
+            Match math_operator = regex.Match(input);
+
+            if (math_operator.Success)
+            {
+                mathOperator = math_operator.Value;
+            }
+        }
+
+        public void GetTerms(string input)
+        {
             string pattern = @"[-(+*/%)]";
 
             string[] inputArray = Regex.Split(input, pattern);
@@ -58,7 +60,6 @@ namespace SimpleCalculator
             {
                 terms[i] = Convert.ToInt32(inputArray[i]);
             }
-            return terms;
         }
 
         public bool CheckForValidInput(string input)
@@ -69,7 +70,7 @@ namespace SimpleCalculator
 
             while (expression.Success)
             {
-                return false;
+                return true;
             }
             throw new InvalidOperationException();
         }
