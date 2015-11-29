@@ -9,50 +9,81 @@ using System.Data;
 
 namespace SimpleCalculator
 {
-    public class Evaluate : Parse
+    public class Evaluate
     {
+        public int result { get; set; }
+        public int last { get; set; }
+        public string lastq { get; set; }
         private string math_expression;
-        private int result;
 
-        public int CalculateMath(string input)
+        public Evaluate(Parse parse)
         {
-            Parse a_parse = new Parse();
-            string pattern = "[-+*/%]";
-            Regex regex = new Regex(pattern);
-            Match math_operator = regex.Match(input);
+            //CalculateMath(parse);
+            parse.user_input = lastq;
+            CalculateMath(parse);
+        }
 
-            if (math_operator.Success)
+        public int CalculateMath(Parse parse)
+        {
+            int first_term = parse.terms[0];
+            int second_term = parse.terms[1];
+            math_expression = parse.mathOperator;
+
+            if (math_expression == "+")
             {
-                math_expression = math_operator.Value;
-                int[] term_array = a_parse.GetTerms(input);
-                int first_term = term_array[0];
-                int second_term = term_array[1];
-
-                if (math_expression == "+")
-                {
-                    result = first_term + second_term;
-                }
-                else if (math_expression == "-")
-                {
-                    result = first_term - second_term;
-                }
-                else if (math_expression == "/")
-                {
-                    result = first_term / second_term;
-                }
-                else if (math_expression == "*")
-                {
-                    result = first_term * second_term;
-                }
-                else if (math_expression == "%")
-                {
-                    result = first_term % second_term;
-                }
+                DoAddition(first_term, second_term);
+            }
+            else if (math_expression == "-")
+            {
+                DoSubtraction(first_term, second_term);
+            }
+            else if (math_expression == "/")
+            {
+                DoDivision(first_term, second_term);
+            }
+            else if (math_expression == "*")
+            {
+                DoMultiplication(first_term, second_term);
+            }
+            else if (math_expression == "%")
+            {
+                DoModulus(first_term, second_term);
             }
             else
             {
                 throw new InvalidOperationException();
             }
+            return last;
+        }
+
+        public int DoAddition(int first_term, int second_term)
+        {
+            result = last = first_term + second_term;
+            lastq = first_term.ToString() + " + " + second_term.ToString();
+            return result;
+        }
+        public int DoSubtraction(int first_term, int second_term)
+        {
+            result = last = first_term - second_term;
+            lastq = first_term.ToString() + " - " + second_term.ToString();
+            return result;
+        }
+        public int DoDivision(int first_term, int second_term)
+        {
+            result = last = first_term / second_term;
+            lastq = first_term.ToString() + " / " + second_term.ToString();
+            return last;
+        }
+        public int DoMultiplication(int first_term, int second_term)
+        {
+            result = last = first_term * second_term;
+            lastq = first_term.ToString() + " * " + second_term.ToString();
+            return result;
+        }
+        public int DoModulus(int first_term, int second_term)
+        {
+            result = last = first_term % second_term;
+            lastq = first_term.ToString() + " % " + second_term.ToString();
             return result;
         }
     }

@@ -10,56 +10,48 @@ namespace SimpleCalculatorTests
         [TestMethod]
         public void EvaluateEnsureICanCreateAnInstance()
         {
-            Evaluate eval = new Evaluate();
+            Parse a_parse = new Parse("4 + 2");
+            Evaluate eval = new Evaluate(a_parse);
             Assert.IsNotNull(eval);
-        }
-        [TestMethod]
-        public void EvaluateEnsureICanGetIntegers()
-        {
-            Evaluate eval = new Evaluate();
-            string input = "21 / 3";
-            int[] expected = new int[] { 21, 3 };
-            int [] actual = eval.GetTerms(input);
-            CollectionAssert.AreEqual(expected, actual);
         }
         [TestMethod]
         public void EvaluateEnsureICanDoAddition()
         {
-            Evaluate eval = new Evaluate();
-            string input = "21 + 3";
-            int actual = eval.CalculateMath(input);
+            Parse a_parse = new Parse("21 + 3");
+            Evaluate eval = new Evaluate(a_parse);
+            int actual = eval.result;
             Assert.AreEqual(24, actual);
         }
         [TestMethod]
         public void EvaluateEnsureICanDoSubtraction()
         {
-            Evaluate eval = new Evaluate();
-            string input = "21 - 3";
-            int actual = eval.CalculateMath(input);
+            Parse a_parse = new Parse("21 - 3");
+            Evaluate eval = new Evaluate(a_parse);
+            int actual = eval.result;
             Assert.AreEqual(18, actual);
         }
         [TestMethod]
         public void EvaluateEnsureICanDoDivision()
         {
-            Evaluate eval = new Evaluate();
-            string input = "21 / 3";
-            int actual = eval.CalculateMath(input);
+            Parse a_parse = new Parse("21 / 3");
+            Evaluate eval = new Evaluate(a_parse);
+            int actual = eval.result;
             Assert.AreEqual(7, actual);
         }
         [TestMethod]
         public void EvaluateEnsureICanDoMultiplication()
         {
-            Evaluate eval = new Evaluate();
-            string input = "2 * 3";
-            int actual = eval.CalculateMath(input);
+            Parse a_parse = new Parse("2 * 3");
+            Evaluate eval = new Evaluate(a_parse);
+            int actual = eval.result;
             Assert.AreEqual(6, actual);
         }
         [TestMethod]
         public void EvaluateEnsureICanGetARemainder()
         {
-            Evaluate eval = new Evaluate();
-            string input = "20 % 3";
-            int actual = eval.CalculateMath(input);
+            Parse a_parse = new Parse("20 % 3");
+            Evaluate eval = new Evaluate(a_parse);
+            int actual = eval.result;
             Assert.AreEqual(2, actual);
         }
     }

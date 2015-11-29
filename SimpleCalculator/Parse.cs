@@ -64,7 +64,8 @@ namespace SimpleCalculator
 
         public bool CheckForValidInput(string input)
         {
-            string pattern = @"[0-9]+[(-+*/%)][0-9]+$";
+            //why did i have to put subtract outside ()
+            string pattern = @"[0-9]+[(+*/%)-][0-9]+$";
             Regex regex = new Regex(pattern);
             Match expression = regex.Match(input);
 
